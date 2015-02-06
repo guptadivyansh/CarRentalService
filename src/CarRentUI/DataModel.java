@@ -41,15 +41,96 @@ public class DataModel {
         } catch (IOException e) {
             System.out.println("Read or write failed!");
         }
-        availableList = new ArrayList<Car>();
-        rentedList = new ArrayList<Car>();
-        repairList = new ArrayList<Car>();
+        availableList = new ArrayList();
+        rentedList = new ArrayList();
+        repairList = new ArrayList();
     }
 
     public void addCar(Car car) {
         car.setIndex(availableList.size() + 1);
         availableList.add(car);
         saveChanges();
+    }
+    
+    public void rentCar(Car car) {
+        car.setIndex(rentedList.size() + 1);
+        car.setRentDate(new Date());
+        car.setRented(true);
+        availableList.remove(car);
+        int count = 1;
+        for(Car tempCar : availableList) {
+            tempCar.setIndex(count++);
+        }
+        rentedList.add(car);
+        saveChanges();
+    }
+    
+    public void returnCar(Car car) {
+        car.setIndex(availableList.size() + 1);
+        car.setRented(false);
+        rentedList.remove(car);
+        int count = 1;
+        for(Car tempCar : rentedList) {
+            tempCar.setIndex(count);
+        }
+        availableList.add(car);
+        saveChanges();        
+    }
+    
+    public void repairCar(Car car) {
+        car.setIndex(repairList.size() + 1);
+        car.setRepairDate(new Date());
+        car.setInWorkshop(true);
+        availableList.remove(car);
+        int count = 1;
+        for(Car tempCar : availableList) {
+            tempCar.setIndex(count++);
+        }
+        repairList.add(car);
+        saveChanges();
+    }
+    
+    public void reviveCar(Car car) {
+        car.setIndex(availableList.size() + 1);
+        car.setInWorkshop(false);
+        repairList.remove(car);
+        int count = 1;
+        for(Car tempCar : repairList) {
+            tempCar.setIndex(count);
+        }
+        availableList.add(car);
+        saveChanges();        
+    }
+    
+    public void deleteCar(Car car) {
+        if(availableList.contains(car)) {
+            availableList.remove(car);
+            int count = 1;
+            for(Car tempCar : availableList) {
+                tempCar.setIndex(count++);
+            }
+            saveChanges();
+            return;
+        }
+        if(rentedList.contains(car)) {
+            rentedList.remove(car);
+            int count = 1;
+            for(Car tempCar : rentedList) {
+                tempCar.setIndex(count++);
+            }
+            saveChanges();
+            return;
+        }
+        if(repairList.contains(car)) {
+            repairList.remove(car);
+            int count = 1;
+            for(Car tempCar : repairList) {
+                tempCar.setIndex(count++);
+            }
+            saveChanges();
+            return;
+        }
+        
     }
 
     public ArrayList<Car> getAvailableList() {

@@ -12,19 +12,33 @@ import java.io.Serializable;
  * @author divyansh
  */
 public enum CarType implements Serializable{
-    AMBASSADOR(10),
-    SUMO(12),
-    OMNI(15),
-    ESTEEM(15),
-    ARMADA(20);
+    AMBASSADOR(10, 100),
+    SUMO(12, 120) ,
+    OMNI(15, 150),
+    ESTEEM(15, 150),
+    ARMADA(20, 200);
     
-    private double rate;
+    private double rateDistance;
+    private double rateTime;
     
-    public double getRate() {
-        return rate;
+    public double getRateDistance() {
+        return rateDistance;
     }
     
-    CarType(double rate) {
-        this.rate = rate;
+    public void setRateDistance(double rateDistance) {
+        this.rateDistance = rateDistance;
+    }
+    
+    public double getRateTime() {
+        return rateTime;
+    }
+    
+    public void setRateTime(double rateTime) {
+        this.rateTime = rateTime;
+    }
+    
+    CarType(double rateDistance, double rateTime) {
+        this.rateDistance = rateDistance;
+        this.rateTime = rateTime;
     }
 }

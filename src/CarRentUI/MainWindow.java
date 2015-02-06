@@ -7,7 +7,9 @@ package CarRentUI;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.JTable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.*;
 
 /**
  *
@@ -16,13 +18,17 @@ import javax.swing.JTable;
 public class MainWindow extends javax.swing.JFrame {
 
     DataModel model;
-    
+
     /**
      * Creates new form MainWindow
      */
     public MainWindow() {
         model = new DataModel();
         availableTableModel = new AvailableTableModel(model.getAvailableList());
+        rentedTableModel = new RentedTableModel(model.getRentedList());
+        repairTableModel = new RepairTableModel(model.getRepairList());
+        
+        setLocationByPlatform(true);
         initComponents();
     }
 
@@ -59,24 +65,84 @@ public class MainWindow extends javax.swing.JFrame {
         rentCancelButton = new javax.swing.JButton();
         rentOKButton = new javax.swing.JButton();
         rentAdvanceLabel = new javax.swing.JLabel();
+        rentWelcomeText = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        rentAdvanceField = new javax.swing.JTextField();
         availablePopup = new javax.swing.JPopupMenu();
         rentMenuItem = new javax.swing.JMenuItem();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        repairMenuItem = new javax.swing.JMenuItem();
+        availableDeleteMenuItem = new javax.swing.JMenuItem();
+        availableDetails = new javax.swing.JMenuItem();
+        rentedPopup = new javax.swing.JPopupMenu();
+        returnMenuItem = new javax.swing.JMenuItem();
+        rentedDeleteMenuItem = new javax.swing.JMenuItem();
+        rentedDetails = new javax.swing.JMenuItem();
+        repairPopup = new javax.swing.JPopupMenu();
+        reviveMenuItem = new javax.swing.JMenuItem();
+        repairDeleteMenuItem = new javax.swing.JMenuItem();
+        repairDetails = new javax.swing.JMenuItem();
+        returnCarDialog = new javax.swing.JDialog();
         jPanel1 = new javax.swing.JPanel();
+        returnCancelButton = new javax.swing.JButton();
+        returnOKButton = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        returnDistanceField = new javax.swing.JTextField();
+        returnFuelField = new javax.swing.JTextField();
+        returnScroll = new javax.swing.JScrollPane();
+        returnMessageBox = new javax.swing.JTextArea();
+        reviveDialog = new javax.swing.JDialog();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        reviveCostField = new javax.swing.JTextField();
+        reviveCancelButton = new javax.swing.JButton();
+        reviveOKButton = new javax.swing.JButton();
+        statsDialog = new javax.swing.JDialog();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
+        jLabel34 = new javax.swing.JLabel();
+        jLabel35 = new javax.swing.JLabel();
+        jLabel36 = new javax.swing.JLabel();
+        jLabel37 = new javax.swing.JLabel();
+        jLabel38 = new javax.swing.JLabel();
+        jLabel40 = new javax.swing.JLabel();
+        jLabel39 = new javax.swing.JLabel();
+        statsOKButton = new javax.swing.JButton();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        availableTab = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         availableTable = new javax.swing.JTable();
-        jPanel2 = new javax.swing.JPanel();
+        rentedTab = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         rentedTable = new javax.swing.JTable();
-        jPanel3 = new javax.swing.JPanel();
+        repairTab = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         repairTable = new javax.swing.JTable();
         newCarButton = new javax.swing.JButton();
-        rentCarButton = new javax.swing.JButton();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        statsButton = new javax.swing.JButton();
 
         newCarDialog.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         newCarDialog.setModal(true);
@@ -215,6 +281,13 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
+        rentAdvanceLabel.setText("Return reminder");
+
+        rentWelcomeText.setFont(new java.awt.Font("Ubuntu", 1, 11)); // NOI18N
+        rentWelcomeText.setText("WelcomeText");
+
+        jLabel1.setText("Advance:");
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -223,25 +296,32 @@ public class MainWindow extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(rentOKButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(rentCancelButton))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rentWelcomeText)
                             .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(rentName, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(rentPhoneNumber, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(rentExpectedBy, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(rentName)
+                                    .addComponent(rentPhoneNumber)
+                                    .addComponent(rentExpectedBy)
+                                    .addComponent(jLabel1))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(rentPhoneNumberField, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                                    .addComponent(rentNameField)
-                                    .addComponent(rentExpectedByField)))
-                            .addComponent(rentAdvanceLabel))
-                        .addGap(0, 49, Short.MAX_VALUE)))
-                .addContainerGap())
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel5Layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(rentOKButton)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(rentCancelButton))
+                                    .addGroup(jPanel5Layout.createSequentialGroup()
+                                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(rentPhoneNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(rentNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(rentExpectedByField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(rentAdvanceField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(0, 0, Short.MAX_VALUE)))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(rentAdvanceLabel)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         jPanel5Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {rentCancelButton, rentOKButton});
@@ -250,17 +330,23 @@ public class MainWindow extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(rentWelcomeText)
+                .addGap(23, 23, 23)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rentName)
                     .addComponent(rentNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rentPhoneNumber)
-                    .addComponent(rentPhoneNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(rentPhoneNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rentPhoneNumber))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rentExpectedBy)
-                    .addComponent(rentExpectedByField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(rentExpectedByField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rentExpectedBy))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rentAdvanceField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
                 .addGap(18, 18, 18)
                 .addComponent(rentAdvanceLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -283,7 +369,8 @@ public class MainWindow extends javax.swing.JFrame {
             rentCarDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(rentCarDialogLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         rentMenuItem.setText("Rent Car");
@@ -293,6 +380,443 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
         availablePopup.add(rentMenuItem);
+
+        repairMenuItem.setText("Send for Repair");
+        repairMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                repairMenuItemActionPerformed(evt);
+            }
+        });
+        availablePopup.add(repairMenuItem);
+
+        availableDeleteMenuItem.setText("Delete Car");
+        availableDeleteMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                availableDeleteMenuItemActionPerformed(evt);
+            }
+        });
+        availablePopup.add(availableDeleteMenuItem);
+
+        availableDetails.setText("View Details");
+        availableDetails.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                availableDetailsActionPerformed(evt);
+            }
+        });
+        availablePopup.add(availableDetails);
+
+        returnMenuItem.setText("Return Car");
+        returnMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                returnMenuItemActionPerformed(evt);
+            }
+        });
+        rentedPopup.add(returnMenuItem);
+
+        rentedDeleteMenuItem.setText("Delete Car");
+        rentedDeleteMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rentedDeleteMenuItemActionPerformed(evt);
+            }
+        });
+        rentedPopup.add(rentedDeleteMenuItem);
+
+        rentedDetails.setText("View Details");
+        rentedDetails.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rentedDetailsActionPerformed(evt);
+            }
+        });
+        rentedPopup.add(rentedDetails);
+
+        reviveMenuItem.setText("Return from Repair");
+        reviveMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reviveMenuItemActionPerformed(evt);
+            }
+        });
+        repairPopup.add(reviveMenuItem);
+
+        repairDeleteMenuItem.setText("Delete Car");
+        repairDeleteMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                repairDeleteMenuItemActionPerformed(evt);
+            }
+        });
+        repairPopup.add(repairDeleteMenuItem);
+
+        repairDetails.setText("View Details");
+        repairDetails.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                repairDetailsActionPerformed(evt);
+            }
+        });
+        repairPopup.add(repairDetails);
+
+        returnCarDialog.setModal(true);
+        returnCarDialog.setResizable(false);
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Enter return details", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("SansSerif", 1, 12))); // NOI18N
+
+        returnCancelButton.setText("Cancel");
+        returnCancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                returnCancelButtonActionPerformed(evt);
+            }
+        });
+
+        returnOKButton.setText("OK");
+        returnOKButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                returnOKButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Distance Travelled:");
+
+        jLabel3.setText("Fuel Consumed:");
+
+        returnDistanceField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                returnDistanceFieldFocusLost(evt);
+            }
+        });
+
+        returnMessageBox.setColumns(20);
+        returnMessageBox.setRows(5);
+        returnScroll.setViewportView(returnMessageBox);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(returnOKButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(returnCancelButton)
+                        .addGap(12, 12, 12))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(returnFuelField, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
+                            .addComponent(returnDistanceField))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(returnScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)
+                        .addContainerGap())))
+        );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {returnCancelButton, returnOKButton});
+
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(returnDistanceField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(returnFuelField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(returnScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(returnCancelButton)
+                    .addComponent(returnOKButton))
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout returnCarDialogLayout = new javax.swing.GroupLayout(returnCarDialog.getContentPane());
+        returnCarDialog.getContentPane().setLayout(returnCarDialogLayout);
+        returnCarDialogLayout.setHorizontalGroup(
+            returnCarDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(returnCarDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        returnCarDialogLayout.setVerticalGroup(
+            returnCarDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(returnCarDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        reviveDialog.setModal(true);
+        reviveDialog.setResizable(false);
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Enter Repair Details", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("SansSerif", 1, 12))); // NOI18N
+
+        jLabel4.setText("Repair Costs:");
+
+        reviveCancelButton.setText("Cancel");
+        reviveCancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reviveCancelButtonActionPerformed(evt);
+            }
+        });
+
+        reviveOKButton.setText("OK");
+        reviveOKButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reviveOKButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(reviveCostField, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(reviveOKButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(reviveCancelButton)))
+                .addContainerGap())
+        );
+
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {reviveCancelButton, reviveOKButton});
+
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(reviveCostField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(reviveCancelButton)
+                    .addComponent(reviveOKButton))
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout reviveDialogLayout = new javax.swing.GroupLayout(reviveDialog.getContentPane());
+        reviveDialog.getContentPane().setLayout(reviveDialogLayout);
+        reviveDialogLayout.setHorizontalGroup(
+            reviveDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(reviveDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        reviveDialogLayout.setVerticalGroup(
+            reviveDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(reviveDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Statistics", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("SansSerif", 1, 12))); // NOI18N
+
+        jLabel6.setText("Total cars");
+
+        jLabel11.setText("AMBASSADOR");
+
+        jLabel16.setText("SUMO");
+
+        jLabel12.setText("OMNI");
+
+        jLabel13.setText("ESTEEM");
+
+        jLabel14.setText("ARMADA");
+
+        jLabel15.setText("Average Revenue");
+
+        jLabel17.setText("Average Repair Cost");
+
+        jLabel18.setText("Average Fuel Economy");
+
+        jLabel19.setText("jLabel19");
+
+        jLabel20.setText("jLabel20");
+
+        jLabel21.setText("jLabel21");
+
+        jLabel22.setText("jLabel22");
+
+        jLabel23.setText("jLabel23");
+
+        jLabel24.setText("jLabel24");
+
+        jLabel25.setText("jLabel25");
+
+        jLabel26.setText("jLabel26");
+
+        jLabel27.setText("jLabel27");
+
+        jLabel28.setText("jLabel28");
+
+        jLabel29.setText("jLabel29");
+
+        jLabel30.setText("jLabel30");
+
+        jLabel31.setText("jLabel31");
+
+        jLabel32.setText("jLabel32");
+
+        jLabel33.setText("jLabel33");
+
+        jLabel34.setText("jLabel34");
+
+        jLabel35.setText("Cars");
+
+        jLabel36.setText("jLabel36");
+
+        jLabel37.setText("jLabel37");
+
+        jLabel38.setText("jLabel38");
+
+        jLabel40.setText("jLabel40");
+
+        jLabel39.setText("jLabel39");
+
+        statsOKButton.setText("OK");
+        statsOKButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                statsOKButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel13)
+                    .addComponent(jLabel14)
+                    .addComponent(jLabel16))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(jLabel19)
+                            .addComponent(jLabel15)
+                            .addComponent(jLabel20)
+                            .addComponent(jLabel21)
+                            .addComponent(jLabel22)
+                            .addComponent(jLabel23))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(jLabel17)
+                            .addComponent(jLabel24)
+                            .addComponent(jLabel25)
+                            .addComponent(jLabel26)
+                            .addComponent(jLabel27)
+                            .addComponent(jLabel28)
+                            .addComponent(statsOKButton))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(jLabel18)
+                            .addComponent(jLabel29)
+                            .addComponent(jLabel30)
+                            .addComponent(jLabel31)
+                            .addComponent(jLabel32)
+                            .addComponent(jLabel33))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(jLabel35)
+                            .addComponent(jLabel36)
+                            .addComponent(jLabel37)
+                            .addComponent(jLabel38)
+                            .addComponent(jLabel40, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel39, javax.swing.GroupLayout.Alignment.LEADING)))
+                    .addComponent(jLabel34))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel34))
+                .addGap(21, 21, 21)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel15)
+                    .addComponent(jLabel17)
+                    .addComponent(jLabel18)
+                    .addComponent(jLabel35))
+                .addGap(12, 12, 12)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel19)
+                    .addComponent(jLabel24)
+                    .addComponent(jLabel29)
+                    .addComponent(jLabel36))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel16)
+                    .addComponent(jLabel20)
+                    .addComponent(jLabel25)
+                    .addComponent(jLabel30)
+                    .addComponent(jLabel37))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel21)
+                    .addComponent(jLabel26)
+                    .addComponent(jLabel31)
+                    .addComponent(jLabel38))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(jLabel22)
+                    .addComponent(jLabel27)
+                    .addComponent(jLabel32)
+                    .addComponent(jLabel39))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(jLabel23)
+                    .addComponent(jLabel28)
+                    .addComponent(jLabel33)
+                    .addComponent(jLabel40))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addComponent(statsOKButton)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout statsDialogLayout = new javax.swing.GroupLayout(statsDialog.getContentPane());
+        statsDialog.getContentPane().setLayout(statsDialogLayout);
+        statsDialogLayout.setHorizontalGroup(
+            statsDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(statsDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        statsDialogLayout.setVerticalGroup(
+            statsDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(statsDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -308,6 +832,7 @@ public class MainWindow extends javax.swing.JFrame {
                 int r = availableTable.rowAtPoint(e.getPoint());
                 if (r >= 0 && r < availableTable.getRowCount()) {
                     availableTable.setRowSelectionInterval(r, r);
+                    selectedCar = model.getAvailableList().get(r);
                 } else {
                     availableTable.clearSelection();
                 }
@@ -322,114 +847,130 @@ public class MainWindow extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(availableTable);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout availableTabLayout = new javax.swing.GroupLayout(availableTab);
+        availableTab.setLayout(availableTabLayout);
+        availableTabLayout.setHorizontalGroup(
+            availableTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(availableTabLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        availableTabLayout.setVerticalGroup(
+            availableTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(availableTabLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Available Cars", jPanel1);
+        jTabbedPane1.addTab("Available Cars", availableTab);
 
-        rentedTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+        rentedTable.setModel(rentedTableModel);
+        rentedTable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e){ checkMouse(e);}
+
+            @Override
+            public void mouseReleased(MouseEvent e){ checkMouse(e);}
+
+            public void checkMouse(MouseEvent e) {
+                int r = rentedTable.rowAtPoint(e.getPoint());
+                if (r >= 0 && r < rentedTable.getRowCount()) {
+                    rentedTable.setRowSelectionInterval(r, r);
+                    selectedCar = model.getRentedList().get(r);
+                } else {
+                    rentedTable.clearSelection();
+                }
+
+                int rowindex = rentedTable.getSelectedRow();
+                if (rowindex < 0)
+                return;
+                if (e.isPopupTrigger() && e.getComponent() instanceof JTable ) {
+                    rentedPopup.show(e.getComponent(), e.getX(), e.getY());
+                }
             }
-        ));
+        });
         jScrollPane3.setViewportView(rentedTable);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout rentedTabLayout = new javax.swing.GroupLayout(rentedTab);
+        rentedTab.setLayout(rentedTabLayout);
+        rentedTabLayout.setHorizontalGroup(
+            rentedTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rentedTabLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        rentedTabLayout.setVerticalGroup(
+            rentedTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rentedTabLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Rented Cards", jPanel2);
+        jTabbedPane1.addTab("Rented Cars", rentedTab);
 
-        repairTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+        repairTable.setModel(repairTableModel);
+        repairTable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e){ checkMouse(e);}
+
+            @Override
+            public void mouseReleased(MouseEvent e){ checkMouse(e);}
+
+            public void checkMouse(MouseEvent e) {
+                int r = repairTable.rowAtPoint(e.getPoint());
+                if (r >= 0 && r < repairTable.getRowCount()) {
+                    repairTable.setRowSelectionInterval(r, r);
+                    selectedCar = model.getRepairList().get(r);
+                } else {
+                    repairTable.clearSelection();
+                }
+
+                int rowindex = repairTable.getSelectedRow();
+                if (rowindex < 0)
+                return;
+                if (e.isPopupTrigger() && e.getComponent() instanceof JTable ) {
+                    repairPopup.show(e.getComponent(), e.getX(), e.getY());
+                }
             }
-        ));
+        });
         jScrollPane2.setViewportView(repairTable);
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout repairTabLayout = new javax.swing.GroupLayout(repairTab);
+        repairTab.setLayout(repairTabLayout);
+        repairTabLayout.setHorizontalGroup(
+            repairTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(repairTabLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        repairTabLayout.setVerticalGroup(
+            repairTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(repairTabLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Repairs", jPanel3);
+        jTabbedPane1.addTab("Repairs", repairTab);
 
-        newCarButton.setText("Add Car");
+        newCarButton.setText("Add New Car");
         newCarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 newCarButtonActionPerformed(evt);
             }
         });
 
-        rentCarButton.setText("Rent Car");
-        rentCarButton.addActionListener(new java.awt.event.ActionListener() {
+        statsButton.setText("View Stats");
+        statsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rentCarButtonActionPerformed(evt);
+                statsButtonActionPerformed(evt);
             }
         });
-
-        jMenu1.setText("File");
-
-        jMenuItem1.setText("jMenuItem1");
-        jMenu1.add(jMenuItem1);
-
-        jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
-
-        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -437,24 +978,24 @@ public class MainWindow extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(newCarButton)
-                    .addComponent(rentCarButton))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(newCarButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(statsButton))
+                    .addComponent(jTabbedPane1))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(newCarButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(rentCarButton)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jTabbedPane1))
+                .addComponent(jTabbedPane1)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(newCarButton)
+                    .addComponent(statsButton))
                 .addContainerGap())
         );
 
@@ -474,27 +1015,16 @@ public class MainWindow extends javax.swing.JFrame {
         newCarDialog.dispose();
     }//GEN-LAST:event_newCancelActionPerformed
 
-    private void rentOKButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rentOKButtonActionPerformed
-        
-    }//GEN-LAST:event_rentOKButtonActionPerformed
-
-    private void rentCarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rentCarButtonActionPerformed
-        rentNameField.setText("");
-        rentPhoneNumberField.setText("");
-        rentExpectedByField.setText("");
-        rentAdvanceLabel.setText("");
-        rentCarDialog.pack();
-        rentCarDialog.setVisible(true);
-    }//GEN-LAST:event_rentCarButtonActionPerformed
-
-    private void rentCancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rentCancelButtonActionPerformed
-        rentCarDialog.dispose();
-    }//GEN-LAST:event_rentCancelButtonActionPerformed
-
     private void newOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newOKActionPerformed
         String registrationNo = newRegNameField.getText();
-        int odo = Integer.parseInt(newOdoField.getText());
         Boolean AC = newAC.isSelected();
+        int odo;
+        try{   
+            odo = Integer.parseInt(newOdoField.getText());
+        }
+        catch(Exception e) {
+            return;
+        }        
         CarType type = (CarType) newTypeComboBox.getSelectedItem();
         Car car = new Car(registrationNo, odo, AC, type);
         model.addCar(car);
@@ -502,45 +1032,436 @@ public class MainWindow extends javax.swing.JFrame {
         newCarDialog.dispose();
     }//GEN-LAST:event_newOKActionPerformed
 
-    private void rentExpectedByFieldCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_rentExpectedByFieldCaretUpdate
-        rentAdvanceLabel.setText("Please return by " + rentExpectedByField.getText());
-    }//GEN-LAST:event_rentExpectedByFieldCaretUpdate
-
     private void rentMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rentMenuItemActionPerformed
+        String welcomeString = selectedCar.getType().toString();
+        welcomeString += " - ";
+        if (selectedCar.isAC()) {
+            welcomeString += "AC";
+        } else {
+            welcomeString += "Non-AC";
+        }
+        welcomeString += " @ ";
+        welcomeString += selectedCar.getRateDistance().toString();
+        welcomeString += " Rs/km";
+
+        rentWelcomeText.setText(welcomeString);
         rentNameField.setText("");
         rentPhoneNumberField.setText("");
-        rentExpectedByField.setText("");
-        rentAdvanceLabel.setText("");
+        rentExpectedByField.setText("dd/mm/yyyy");
+        rentAdvanceField.setText("");
         rentCarDialog.pack();
         rentCarDialog.setVisible(true);
     }//GEN-LAST:event_rentMenuItemActionPerformed
+
+    private void rentOKButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rentOKButtonActionPerformed
+        String rentName = rentNameField.getText();
+        String rentNo = rentPhoneNumberField.getText();
+        
+        try {
+            long phone = Long.parseLong(rentNo);
+        }
+        catch(Exception e) {
+            return;
+        }        
+        Date expectedBy = new Date();
+        try {
+            expectedBy = formatter.parse(rentExpectedByField.getText());
+        } catch (Exception e) {
+            return;
+        }
+        Double advance;
+        try{
+            advance = Double.valueOf(rentAdvanceField.getText());
+        }
+        catch(Exception e) {
+            return;
+        }
+        selectedCar.setRentName(rentName);
+        selectedCar.setExpectedReturn(expectedBy);
+        selectedCar.setRentPhoneNo(rentNo);
+        selectedCar.setAdvance(advance);
+        selectedCar.setRented(true);
+
+        model.rentCar(selectedCar);
+        availableTableModel.fireTableDataChanged();
+        rentedTableModel.fireTableDataChanged();
+        rentCarDialog.dispose();
+    }//GEN-LAST:event_rentOKButtonActionPerformed
+
+    private void rentCancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rentCancelButtonActionPerformed
+        rentCarDialog.dispose();
+    }//GEN-LAST:event_rentCancelButtonActionPerformed
+
+    private void rentExpectedByFieldCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_rentExpectedByFieldCaretUpdate
+        rentAdvanceLabel.setText("Please return the car by " + rentExpectedByField.getText()
+                + " to avoid late charge.");
+    }//GEN-LAST:event_rentExpectedByFieldCaretUpdate
+
+    private void returnMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnMenuItemActionPerformed
+        returnDistanceField.setText("");
+        returnFuelField.setText("");
+        returnScroll.setVisible(false);
+        returnCarDialog.pack();
+        returnCarDialog.setVisible(true);
+    }//GEN-LAST:event_returnMenuItemActionPerformed
+
+    private void repairMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_repairMenuItemActionPerformed
+        model.repairCar(selectedCar);
+        availableTableModel.fireTableDataChanged();
+        repairTableModel.fireTableDataChanged();
+    }//GEN-LAST:event_repairMenuItemActionPerformed
+
+    private void returnDistanceFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_returnDistanceFieldFocusLost
+        int distance = Integer.valueOf(returnDistanceField.getText());
+        cost = selectedCar.calculateCost(distance);
+        Date returnDate = new Date();
+        Long t1 = returnDate.getTime();
+        Long t2 = selectedCar.getRentDate().getTime();
+
+        Long diff = t1 - t2;
+        diff /= 1000; //seconds
+        diff /= 3600; //hours  
+
+        String message = "Hours: ";
+        message += diff;
+        if (diff < (long) 4) {
+            diff = (long) 4;
+        }
+        message += "\nDistance: ";
+        message += distance;
+        message += "\nCost by distance: ";
+        message += distance * selectedCar.getRateDistance();
+        message += "\nCost by time: ";
+        message += diff * selectedCar.getRateTime();
+        message += "\nFinal cost: ";
+        message += cost;
+        message += "\nAdvance: ";
+        message += selectedCar.getAdvance();
+        if (cost < selectedCar.getAdvance()) {
+            message += "\nRefund ";
+            message += selectedCar.getAdvance() - cost;
+            message += " Rs";
+        } else {
+            message += "\nPay ";
+            message += cost - selectedCar.getAdvance();
+            message += " Rs";
+        }
+
+        returnScroll.setVisible(true);
+        returnMessageBox.setText(message);
+        returnCarDialog.pack();
+    }//GEN-LAST:event_returnDistanceFieldFocusLost
+
+    private void returnCancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnCancelButtonActionPerformed
+        returnCarDialog.dispose();
+    }//GEN-LAST:event_returnCancelButtonActionPerformed
+
+    private void returnOKButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnOKButtonActionPerformed
+        int distance;
+        int fuel;
+        try{
+            distance = Integer.valueOf(returnDistanceField.getText());
+            fuel = Integer.valueOf(returnFuelField.getText());
+        }
+        catch(Exception e) {
+            return;
+        }
+        selectedCar.addDistance(distance);
+        selectedCar.addFuel(fuel);
+        selectedCar.addRevenue(distance);
+        model.returnCar(selectedCar);
+        availableTableModel.fireTableDataChanged();
+        rentedTableModel.fireTableDataChanged();
+        returnCarDialog.dispose();
+    }//GEN-LAST:event_returnOKButtonActionPerformed
+
+    private void reviveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reviveMenuItemActionPerformed
+        reviveCostField.setText("");
+        reviveDialog.pack();
+        reviveDialog.setVisible(true);
+    }//GEN-LAST:event_reviveMenuItemActionPerformed
+
+    private void reviveCancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reviveCancelButtonActionPerformed
+        reviveDialog.dispose();
+    }//GEN-LAST:event_reviveCancelButtonActionPerformed
+
+    private void reviveOKButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reviveOKButtonActionPerformed
+        double cost;
+        try{
+            cost = Double.valueOf(reviveCostField.getText());
+        }
+        catch (Exception e) {
+            return;
+        }
+        
+        selectedCar.addRepairCost(cost);
+        
+        model.reviveCar(selectedCar);
+        availableTableModel.fireTableDataChanged();
+        rentedTableModel.fireTableDataChanged();
+        reviveDialog.dispose();
+    }//GEN-LAST:event_reviveOKButtonActionPerformed
+
+    private void availableDeleteMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_availableDeleteMenuItemActionPerformed
+        int n = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this car?",
+                "Confirm Deletion",
+                JOptionPane.YES_NO_OPTION);
+        switch (n) {
+            case JOptionPane.YES_OPTION: {
+                model.deleteCar(selectedCar);
+                availableTableModel.fireTableDataChanged();
+                return;
+            }
+            default:
+                return;
+        }
+    }//GEN-LAST:event_availableDeleteMenuItemActionPerformed
+
+    private void rentedDeleteMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rentedDeleteMenuItemActionPerformed
+        int n = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this car?",
+                "Confirm Deletion",
+                JOptionPane.YES_NO_OPTION);
+        switch (n) {
+            case JOptionPane.YES_OPTION: {
+                model.deleteCar(selectedCar);
+                rentedTableModel.fireTableDataChanged();
+                return;
+            }
+            default:
+                return;
+        }
+    }//GEN-LAST:event_rentedDeleteMenuItemActionPerformed
+
+    private void repairDeleteMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_repairDeleteMenuItemActionPerformed
+        int n = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this car?",
+                "Confirm Deletion",
+                JOptionPane.YES_NO_OPTION);
+        switch (n) {
+            case JOptionPane.YES_OPTION: {
+                model.deleteCar(selectedCar);
+                repairTableModel.fireTableDataChanged();
+                return;
+            }
+            default:
+                return;
+        }
+    }//GEN-LAST:event_repairDeleteMenuItemActionPerformed
+
+    private void statsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statsButtonActionPerformed
+        double[] revenues = {0, 0, 0, 0, 0};
+        double[] repairs = {0, 0, 0, 0, 0};
+        double [] economy = {0, 0, 0, 0, 0};
+        double [] distance = {0, 0, 0, 0, 0};
+        double [] fuel = {0, 0, 0, 0, 0};
+        int[] cars = {0, 0, 0, 0, 0};
+        int[] AC = {0, 0, 0, 0, 0};
+        
+        for(Car car: model.getAvailableList()) {
+            int type;
+            if(car.getType() == CarType.AMBASSADOR) type = 0;
+            else if(car.getType() == CarType.SUMO) type = 1;
+            else if(car.getType() == CarType.OMNI) type = 2;
+            else if(car.getType() == CarType.ESTEEM) type = 3;
+            else type = 4;
+            
+            cars[type]++;
+            if(car.isAC()) AC[type]++;
+            revenues[type] += car.getTotalRevenue();
+            distance[type] += car.getTotalDistance();
+            fuel[type] += car.getTotalFuel();
+            repairs[type] += car.getTotalRepairCosts();
+        }
+        
+        for(Car car: model.getRentedList()) {
+            int type;
+            if(car.getType() == CarType.AMBASSADOR) type = 0;
+            else if(car.getType() == CarType.SUMO) type = 1;
+            else if(car.getType() == CarType.OMNI) type = 2;
+            else if(car.getType() == CarType.ESTEEM) type = 3;
+            else type = 4;
+            
+            cars[type]++;
+            if(car.isAC()) AC[type]++;
+            revenues[type] += car.getTotalRevenue();
+            repairs[type] += car.getTotalRepairCosts();
+        }
+        
+        for(Car car: model.getRepairList()) {
+            int type;
+            if(car.getType() == CarType.AMBASSADOR) type = 0;
+            else if(car.getType() == CarType.SUMO) type = 1;
+            else if(car.getType() == CarType.OMNI) type = 2;
+            else if(car.getType() == CarType.ESTEEM) type = 3;
+            else type = 4;
+            
+            cars[type]++;
+            if(car.isAC()) AC[type]++;
+            revenues[type] += car.getTotalRevenue();
+            repairs[type] += car.getTotalRepairCosts();
+        }
+        
+        for(int i = 0; i < 5; i++)
+        {
+            if(fuel[i] != 0) economy[i] = distance[i] / fuel[i];
+            if(cars[i] != 0) revenues[i] /= cars[i];
+            if(cars[i] != 0) repairs[i] /= cars[i];
+        }
+        
+        Integer total = 0;
+        for(int i = 0; i < 5; i++) total += cars[i];
+        
+        jLabel34.setText(total + "");
+        
+        jLabel19.setText(Double.toString(revenues[0]));
+        jLabel20.setText(Double.toString(revenues[1]));
+        jLabel21.setText(Double.toString(revenues[2]));
+        jLabel22.setText(Double.toString(revenues[3]));
+        jLabel23.setText(Double.toString(revenues[4]));
+        
+        jLabel24.setText(Double.toString(repairs[0]));
+        jLabel25.setText(Double.toString(repairs[1]));
+        jLabel26.setText(Double.toString(repairs[2]));
+        jLabel27.setText(Double.toString(repairs[3]));
+        jLabel28.setText(Double.toString(repairs[4]));
+        
+        jLabel29.setText(Double.toString(economy[0]));
+        jLabel30.setText(Double.toString(economy[1]));
+        jLabel31.setText(Double.toString(economy[2]));
+        jLabel32.setText(Double.toString(economy[3]));
+        jLabel33.setText(Double.toString(economy[4]));
+        
+        jLabel36.setText(""+ AC[0] + " AC, " + (cars[0]-AC[0]) + " Non-AC");
+        jLabel37.setText(""+ AC[1] + " AC, " + (cars[1]-AC[1]) + " Non-AC");
+        jLabel38.setText(""+ AC[2] + " AC, " + (cars[2]-AC[2]) + " Non-AC");
+        jLabel39.setText(""+ AC[3] + " AC, " + (cars[3]-AC[3]) + " Non-AC");
+        jLabel40.setText(""+ AC[4] + " AC, " + (cars[4]-AC[4]) + " Non-AC");
+        
+        
+        statsDialog.pack();
+        statsDialog.setVisible(true);
+    }//GEN-LAST:event_statsButtonActionPerformed
+
+    private void availableDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_availableDetailsActionPerformed
+        String message = "";
+        message += selectedCar.getType().toString();
+        message += " - ";
+        message += selectedCar.isAC()?"AC\n":"Non-AC\n";
+        message += "\nRegistration No.: ";
+        message += selectedCar.getRegistrationNo();
+        message += "\nOdometer reading: ";
+        message += selectedCar.getOdoReading();
+        message += " km";
+        message += "\nTotal distance travelled since purchase: ";
+        message += selectedCar.getTotalDistance();
+        message += " km";
+        message += "\nTotal fuel consumed: ";
+        message += selectedCar.getTotalFuel();
+        message += " l";
+        message += "\nAverage fuel economy: ";
+        if(selectedCar.getTotalFuel() == 0) message += "NA";
+        else message += selectedCar.getTotalDistance()/ selectedCar.getTotalFuel();
+        message += " km/l";
+        message += "\nAmount spent on maintenance: ";
+        message += selectedCar.getTotalRepairCosts();
+        message += " Rs";
+        message += "\nTotal revenue: ";
+        message += selectedCar.getTotalRevenue();
+        message += " Rs";
+        
+        JOptionPane.showMessageDialog(this, message, "Car details", JOptionPane.PLAIN_MESSAGE);
+
+    }//GEN-LAST:event_availableDetailsActionPerformed
+
+    private void rentedDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rentedDetailsActionPerformed
+        String message = "";
+        message += selectedCar.getType().toString();
+        message += " - ";
+        message += selectedCar.isAC()?"AC\n":"Non-AC\n";
+        message += "\nRegistration No.: ";
+        message += selectedCar.getRegistrationNo();
+        message += "\nRented by: ";
+        message += selectedCar.getRentName();
+        message += "\nAdvance deposited: ";
+        message += selectedCar.getAdvance();
+        message += " Rs";
+        message += "\nRented at odometer reading: ";
+        message += selectedCar.getOdoReading();
+        message += " km\n";
+        message += "\nTotal distance travelled since purchase: ";
+        message += selectedCar.getTotalDistance();
+        message += " km";
+        message += "\nTotal fuel consumed: ";
+        message += selectedCar.getTotalFuel();
+        message += " l";
+        message += "\nAverage fuel economy: ";
+        if(selectedCar.getTotalFuel() == 0) message += "NA";
+        else message += selectedCar.getTotalDistance()/ selectedCar.getTotalFuel();
+        message += " km/l";
+        message += "\nAmount spent on maintenance: ";
+        message += selectedCar.getTotalRepairCosts();
+        message += " Rs";
+        message += "\nTotal revenue: ";
+        message += selectedCar.getTotalRevenue();
+        message += " Rs";
+        
+        JOptionPane.showMessageDialog(this, message, "Car details", JOptionPane.PLAIN_MESSAGE);
+    }//GEN-LAST:event_rentedDetailsActionPerformed
+
+    private void statsOKButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statsOKButtonActionPerformed
+        statsDialog.dispose();
+    }//GEN-LAST:event_statsOKButtonActionPerformed
+
+    private void repairDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_repairDetailsActionPerformed
+        String message = "";
+        message += selectedCar.getType().toString();
+        message += " - ";
+        message += selectedCar.isAC()?"AC\n":"Non-AC\n";
+        message += "\nRegistration No.: ";
+        message += selectedCar.getRegistrationNo();
+        message += "\nSent on: ";
+        message += selectedCar.getRepairDate().toString();
+        message += "\nOdometer reading: ";
+        message += selectedCar.getOdoReading();
+        message += " km\n";
+        message += "\nTotal distance travelled since purchase: ";
+        message += selectedCar.getTotalDistance();
+        message += " km";
+        message += "\nTotal fuel consumed: ";
+        message += selectedCar.getTotalFuel();
+        message += " l";
+        message += "\nAverage fuel economy: ";
+        if(selectedCar.getTotalFuel() == 0) message += "NA";
+        else message += selectedCar.getTotalDistance()/ selectedCar.getTotalFuel();
+        message += " km/l";
+        message += "\nAmount spent on maintenance: ";
+        message += selectedCar.getTotalRepairCosts();
+        message += " Rs";
+        message += "\nTotal revenue: ";
+        message += selectedCar.getTotalRevenue();
+        message += " Rs";
+        
+        JOptionPane.showMessageDialog(this, message, "Car details", JOptionPane.PLAIN_MESSAGE);
+    }//GEN-LAST:event_repairDetailsActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+
+        /* Set the system look and feel */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            // Set System L&F
+            UIManager.setLookAndFeel(
+                    UIManager.getSystemLookAndFeelClassName());
+        } catch (UnsupportedLookAndFeelException e) {
+            // handle exception
+        } catch (ClassNotFoundException e) {
+            // handle exception
+        } catch (InstantiationException e) {
+            // handle exception
+        } catch (IllegalAccessException e) {
+            // handle exception
         }
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -551,15 +1472,57 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     private AvailableTableModel availableTableModel;
-    
+    private RentedTableModel rentedTableModel;
+    private RepairTableModel repairTableModel;
+
+    private Car selectedCar;
+
+    private SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+
+    private double cost; //temp
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem availableDeleteMenuItem;
+    private javax.swing.JMenuItem availableDetails;
     private javax.swing.JPopupMenu availablePopup;
+    private javax.swing.JPanel availableTab;
     private javax.swing.JTable availableTable;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -581,9 +1544,9 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JTextField newRegNameField;
     private javax.swing.JLabel newType;
     private javax.swing.JComboBox newTypeComboBox;
+    private javax.swing.JTextField rentAdvanceField;
     private javax.swing.JLabel rentAdvanceLabel;
     private javax.swing.JButton rentCancelButton;
-    private javax.swing.JButton rentCarButton;
     private javax.swing.JDialog rentCarDialog;
     private javax.swing.JLabel rentExpectedBy;
     private javax.swing.JTextField rentExpectedByField;
@@ -593,7 +1556,33 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton rentOKButton;
     private javax.swing.JLabel rentPhoneNumber;
     private javax.swing.JTextField rentPhoneNumberField;
+    private javax.swing.JLabel rentWelcomeText;
+    private javax.swing.JMenuItem rentedDeleteMenuItem;
+    private javax.swing.JMenuItem rentedDetails;
+    private javax.swing.JPopupMenu rentedPopup;
+    private javax.swing.JPanel rentedTab;
     private javax.swing.JTable rentedTable;
+    private javax.swing.JMenuItem repairDeleteMenuItem;
+    private javax.swing.JMenuItem repairDetails;
+    private javax.swing.JMenuItem repairMenuItem;
+    private javax.swing.JPopupMenu repairPopup;
+    private javax.swing.JPanel repairTab;
     private javax.swing.JTable repairTable;
+    private javax.swing.JButton returnCancelButton;
+    private javax.swing.JDialog returnCarDialog;
+    private javax.swing.JTextField returnDistanceField;
+    private javax.swing.JTextField returnFuelField;
+    private javax.swing.JMenuItem returnMenuItem;
+    private javax.swing.JTextArea returnMessageBox;
+    private javax.swing.JButton returnOKButton;
+    private javax.swing.JScrollPane returnScroll;
+    private javax.swing.JButton reviveCancelButton;
+    private javax.swing.JTextField reviveCostField;
+    private javax.swing.JDialog reviveDialog;
+    private javax.swing.JMenuItem reviveMenuItem;
+    private javax.swing.JButton reviveOKButton;
+    private javax.swing.JButton statsButton;
+    private javax.swing.JDialog statsDialog;
+    private javax.swing.JButton statsOKButton;
     // End of variables declaration//GEN-END:variables
 }
